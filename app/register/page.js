@@ -65,7 +65,7 @@ export default function RegisterPage() {
         </Button>
         <div className="mt-6 text-center">
           <span className="text-sm">Already have an account? </span>
-          <Link className="text-sm text-blue-600" href="/login">
+          <Link className="text-sm text-blue-600 font-bold" href="/login">
             Sign in
           </Link>
         </div>

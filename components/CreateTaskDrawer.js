@@ -12,6 +12,7 @@ import {
   Typography,
   Slider,
 } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -48,16 +49,6 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
       closeIcon={
         <CloseOutlined className="text-black text-lg absolute right-4 top-4 cursor-pointer" />
       }
-      //   extra={
-      //     <Button
-      //       size="large"
-      //       type="primary"
-      //       onClick={submit}
-      //       className="w-full h-10 bg-black! text-white! border-none! hover:bg-neutral-800!"
-      //     >
-      //       Create
-      //     </Button>
-      //   }
     >
       <Form form={form} layout="vertical" requiredMark={false}>
         <Form.Item

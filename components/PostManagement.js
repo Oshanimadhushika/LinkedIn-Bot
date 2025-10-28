@@ -35,6 +35,7 @@ export default function PostManagement() {
                     key="approve"
                     type="primary"
                     onClick={() => approve(item.id)}
+                    className="bg-blue-600! text-white!"
                   >
                     Approve
                   </Button>,

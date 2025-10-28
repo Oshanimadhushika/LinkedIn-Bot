@@ -11,8 +11,8 @@ export default function RootLayout({ children }) {
           theme={{
             algorithm: [theme.defaultAlgorithm, theme.darkAlgorithm],
             token: {
-              colorPrimary: "#000000",
-              colorTextLightSolid: "#ffffff",
+              // colorPrimary: "#000000",
+              // colorTextLightSolid: "#ffffff",
               borderRadius: 10,
             },
           }}

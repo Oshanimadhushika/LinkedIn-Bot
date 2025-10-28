@@ -68,7 +68,7 @@ export default function LoginPage() {
         </Button>
         <div className="mt-6 text-center">
           <span className="text-sm">No account? </span>
-          <Link className="text-sm text-blue-600" href="/register">
+          <Link className="text-sm text-blue-600 font-bold" href="/register">
             Create one
           </Link>
         </div>

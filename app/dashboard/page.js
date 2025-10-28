@@ -60,8 +60,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="container mx-auto w-full px-4 sm:px-6 lg:px-10 py-8 space-y-8 flex flex-col items-center">
-      <section className="w-full max-w-6xl p-6 rounded-xl shadow bg-white">
+    <main className="container mx-auto w-full px-4 sm:px-5 lg:px-4 py-8 space-y-8 flex flex-col items-center">
+      <section className="w-full max-w-7xl p-6 rounded-xl shadow bg-white">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <Typography.Title level={3} className="mb-1!">
@@ -82,7 +82,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="p-4 w-full">
           <Typography.Title level={4}>Task Log</Typography.Title>
           <Typography.Paragraph type="secondary">
