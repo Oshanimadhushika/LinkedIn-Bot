@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Drawer,
@@ -11,7 +11,9 @@ import {
   Checkbox,
   Typography,
   Slider,
+  TimePicker,
 } from "antd";
+import dayjs from "dayjs";
 import { CloseOutlined } from "@ant-design/icons";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -20,19 +22,45 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
   const [form] = Form.useForm();
   const [humanApproval, setHumanApproval] = useState(false);
 
+  const weekdaysSelected = Form.useWatch("weekdays", form) || [];
+  const slotsPerDay = Form.useWatch("slotsPerDay", form) || 1;
+  const slots = Form.useWatch("slots", form) || [];
+
+  useEffect(() => {
+    if (weekdaysSelected.length === 0) {
+      form.setFieldsValue({ slots: [] });
+      return;
+    }
+
+    let updated = [...slots];
+
+    if (updated.length < slotsPerDay) {
+      for (let i = updated.length; i < slotsPerDay; i++) {
+        updated.push(null);
+      }
+    } else if (updated.length > slotsPerDay) {
+      updated = updated.slice(0, slotsPerDay);
+    }
+
+    form.setFieldsValue({ slots: updated });
+  }, [slotsPerDay, weekdaysSelected]);
+
   const submit = async () => {
     const values = await form.validateFields();
+
     const task = {
       id: crypto.randomUUID(),
       name: values.name,
       weekdays: values.weekdays,
       slotsPerDay: values.slotsPerDay,
+      slots: values.slots.map((t) => t && dayjs(t).format("HH:mm")),
       platform: "LinkedIn",
       humanApproval: values.humanApproval,
       queueSize: values.humanApproval ? values.queueSize : undefined,
       instructions: values.instructions,
       createdAt: new Date().toISOString(),
     };
+
     onCreate(task);
     form.resetFields();
     setHumanApproval(false);
@@ -41,14 +69,19 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
 
   return (
     <Drawer
-      title="Create Task"
+      title={
+        <div className="flex items-center w-full justify-between">
+          <span className="text-black font-medium text-lg">Create Task</span>
+          <CloseOutlined
+            className="text-black text-lg cursor-pointer"
+            onClick={onClose}
+          />
+        </div>
+      }
       open={open}
       onClose={onClose}
       width={520}
-      closable={true}
-      closeIcon={
-        <CloseOutlined className="text-black text-lg absolute right-4 top-4 cursor-pointer" />
-      }
+      closable={false}
     >
       <Form form={form} layout="vertical" requiredMark={false}>
         <Form.Item
@@ -61,6 +94,7 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
         >
           <Input placeholder="e.g., Morning LinkedIn posts" />
         </Form.Item>
+
         <Form.Item
           label="Weekdays"
           name="weekdays"
@@ -76,20 +110,56 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
             </div>
           </Checkbox.Group>
         </Form.Item>
-        <Form.Item label="Slots per day" name="slotsPerDay" initialValue={1}>
+
+        <Form.Item label="Posts per day" name="slotsPerDay" initialValue={1}>
           <InputNumber
             className="w-full"
             min={1}
-            max={24}
-            placeholder="e.g., 3"
+            max={5}
+            disabled={weekdaysSelected.length === 0}
           />
         </Form.Item>
-        <Form.Item label="Platform" name="platform" initialValue={"LinkedIn"}>
+
+        {weekdaysSelected.length > 0 && (
+          <Form.List name="slots">
+            {(fields) => (
+              <>
+                <Typography.Text className="font-medium">
+                  Posting Times
+                </Typography.Text>
+                <div className="grid gap-2 mt-2">
+                  {fields.map(({ key, name }, index) => (
+                    <Form.Item
+                      key={key}
+                      name={name}
+                      rules={[
+                        {
+                          required: true,
+                          message: `Select time for slot ${index + 1}`,
+                        },
+                      ]}
+                    >
+                      <TimePicker
+                        format="hh:mm A"
+                        use12Hours
+                        className="w-full"
+                        placeholder={`Time for post #${index + 1}`}
+                      />
+                    </Form.Item>
+                  ))}
+                </div>
+              </>
+            )}
+          </Form.List>
+        )}
+
+        <Form.Item label="Platform" name="platform" initialValue="LinkedIn">
           <Select
             options={[{ label: "LinkedIn", value: "LinkedIn" }]}
             disabled
           />
         </Form.Item>
+
         <Form.Item
           label="Human Approval"
           name="humanApproval"
@@ -98,30 +168,29 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
         >
           <Switch onChange={(v) => setHumanApproval(v)} />
         </Form.Item>
+
         {humanApproval && (
           <Form.Item
             label={<Typography.Text>Queue size (1–10)</Typography.Text>}
             name="queueSize"
+            rules={[{ required: true }]}
           >
             <Slider min={1} max={10} marks={{ 1: "1", 10: "10" }} />
           </Form.Item>
         )}
+
         <Form.Item label="Main instructions" name="instructions">
-          <Input.TextArea
-            rows={5}
-            placeholder="Write the main posting instructions, tone, hashtags, etc."
-          />
+          <Input.TextArea rows={5} />
         </Form.Item>
-        <div className="flex justify-end w-full">
-          <Button
-            size="large"
-            type="primary"
-            onClick={submit}
-            className="w-full h-10 bg-black! text-white! border-none! hover:bg-neutral-800!"
-          >
-            Create
-          </Button>
-        </div>
+
+        <Button
+          size="large"
+          type="primary"
+          className="w-full h-10 bg-black! text-white! border-none! hover:bg-neutral-800!"
+          onClick={submit}
+        >
+          Create
+        </Button>
       </Form>
     </Drawer>
   );
