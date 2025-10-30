@@ -10,30 +10,35 @@ export default function DashboardPage() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
-  //   const [logs, setLogs] = useState([]);
-  const [logs, setLogs] = useState([
-    {
-      id: "l1",
-      time: new Date().toLocaleString(),
-      task: "Morning LinkedIn Post",
-      platform: "LinkedIn",
-      status: "published",
-    },
-    {
-      id: "l2",
-      time: new Date().toLocaleString(),
-      task: "Evening Engagement Boost",
-      platform: "LinkedIn",
-      status: "queued",
-    },
-    {
-      id: "l3",
-      time: new Date().toLocaleString(),
-      task: "Weekly Update Article",
-      platform: "LinkedIn",
-      status: "failed",
-    },
-  ]);
+  const [mounted, setMounted] = useState(false);
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    setMounted(true);
+    setLogs([
+      {
+        id: "l1",
+        time: new Date().toLocaleString(),
+        task: "Morning LinkedIn Post",
+        platform: "LinkedIn",
+        status: "published",
+      },
+      {
+        id: "l2",
+        time: new Date().toLocaleString(),
+        task: "Evening Engagement Boost",
+        platform: "LinkedIn",
+        status: "queued",
+      },
+      {
+        id: "l3",
+        time: new Date().toLocaleString(),
+        task: "Weekly Update Article",
+        platform: "LinkedIn",
+        status: "failed",
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -43,6 +48,8 @@ export default function DashboardPage() {
       router.replace("/");
     }
   }, [router]);
+
+  if (!mounted) return null;
 
   const createTask = (t) => {
     setTasks([t, ...tasks]);
@@ -61,7 +68,7 @@ export default function DashboardPage() {
 
   return (
     <main className="container mx-auto w-full px-4 sm:px-5 lg:px-4 py-8 space-y-8 flex flex-col items-center">
-      <section className="w-full max-w-7xl p-6 rounded-xl shadow bg-white">
+      <section className="w-full max-w-7xl p-6 rounded-xl shadow-2xl bg-white/90 ">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <Typography.Title level={3} className="mb-1!">
@@ -82,7 +89,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6 ">
         <Card className="p-4 w-full">
           <Typography.Title level={4}>Task Log</Typography.Title>
           <Typography.Paragraph type="secondary">

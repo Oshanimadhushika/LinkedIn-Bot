@@ -64,9 +64,9 @@ export default function TaskLogTable({ logs }) {
         title="Task Log Details"
         open={open}
         onCancel={handleClose}
-       footer={null}
+        footer={null}
       >
-        <Divider className="my-5"/>
+        <Divider className="my-5" />
 
         {selectedTask ? (
           <div className="space-y-2">

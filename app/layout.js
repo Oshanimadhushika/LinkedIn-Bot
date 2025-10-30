@@ -1,23 +1,23 @@
 import "./globals.css";
 import React from "react";
-import { ConfigProvider, App as AntdApp, theme } from "antd";
+import { ConfigProvider, App as AntdApp, theme as antdTheme } from "antd";
 import "antd/dist/reset.css";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="w-full h-full">
         <ConfigProvider
           theme={{
-            algorithm: [theme.defaultAlgorithm, theme.darkAlgorithm],
+            algorithm: [antdTheme.defaultAlgorithm],
             token: {
-              // colorPrimary: "#000000",
-              // colorTextLightSolid: "#ffffff",
               borderRadius: 10,
             },
           }}
         >
-          <AntdApp>{children}</AntdApp>
+          <div className="bg-transparent min-h-screen">
+            <AntdApp>{children}</AntdApp>
+          </div>
         </ConfigProvider>
       </body>
     </html>
