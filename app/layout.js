@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
       <body className="w-full h-full">
         <ConfigProvider
           theme={{
-            algorithm: [antdTheme.defaultAlgorithm],
+            algorithm: antdTheme.defaultAlgorithm,
             token: {
               borderRadius: 10,
             },

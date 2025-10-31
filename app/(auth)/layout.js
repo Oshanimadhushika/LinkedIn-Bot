@@ -1,5 +1,4 @@
 import React from "react";
-import { App as AntdApp } from "antd";
 import "antd/dist/reset.css";
 
 export default function AuthLayout({ children }) {
@@ -14,9 +13,7 @@ export default function AuthLayout({ children }) {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="bg-transparent min-h-screen">
-          <AntdApp>{children}</AntdApp>
-        </div>
+        <div className="bg-transparent min-h-screen">{children}</div>
       </div>
     </div>
   );

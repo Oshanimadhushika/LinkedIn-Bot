@@ -68,10 +68,10 @@ export default function DashboardPage() {
 
   return (
     <main className="container mx-auto w-full px-4 sm:px-5 lg:px-4 py-8 space-y-8 flex flex-col items-center">
-      <section className="w-full max-w-7xl p-6 rounded-xl shadow-2xl bg-white/90 ">
+      <section className="w-full max-w-7xl p-6 rounded-sm! shadow-2xl bg-white/90 ">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
-            <Typography.Title level={3} className="mb-1!">
+            <Typography.Title level={3} className="mb-1! font-bold!">
               Welcome 👋
             </Typography.Title>
             <Typography.Text type="secondary">
@@ -82,7 +82,7 @@ export default function DashboardPage() {
             type="primary"
             size="large"
             onClick={() => setOpen(true)}
-            className="h-10 bg-black! text-white! border-none! hover:bg-neutral-800!"
+            className="h-10 bg-black! text-white! border-none! hover:bg-neutral-800! rounded-sm!"
           >
             Create a Task
           </Button>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
       </section>
 
       <section className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6 ">
-        <Card className="p-4 w-full">
+        <Card className="p-4 w-full rounded-sm!">
           <Typography.Title level={4}>Task Log</Typography.Title>
           <Typography.Paragraph type="secondary">
             Single log for each publish
@@ -98,7 +98,7 @@ export default function DashboardPage() {
           <TaskLogTable logs={logs} />
         </Card>
 
-        <Card className="p-4 w-full">
+        <Card className="p-4 w-full rounded-sm!">
           <Typography.Title level={4}>Post Management</Typography.Title>
           <Typography.Paragraph type="secondary">
             Pending Approval & Approved
