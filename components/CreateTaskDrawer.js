@@ -92,7 +92,11 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
             { min: 3, message: "Min 3 characters" },
           ]}
         >
-          <Input placeholder="e.g., Morning LinkedIn posts" />
+          <Input
+            placeholder="e.g., Morning LinkedIn posts"
+            size="large"
+            className="rounded-sm!"
+          />
         </Form.Item>
 
         <Form.Item
@@ -113,10 +117,11 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
 
         <Form.Item label="Posts per day" name="slotsPerDay" initialValue={1}>
           <InputNumber
-            className="w-full"
+            className="w-full rounded-sm!"
             min={1}
             max={5}
             disabled={weekdaysSelected.length === 0}
+            size="large"
           />
         </Form.Item>
 
@@ -142,8 +147,9 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
                       <TimePicker
                         format="hh:mm A"
                         use12Hours
-                        className="w-full"
+                        className="w-full rounded-sm!"
                         placeholder={`Time for post #${index + 1}`}
+                        size="large"
                       />
                     </Form.Item>
                   ))}
@@ -157,6 +163,8 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
           <Select
             options={[{ label: "LinkedIn", value: "LinkedIn" }]}
             disabled
+            size="large"
+            className="rounded-none!"
           />
         </Form.Item>
 
@@ -180,13 +188,13 @@ export default function CreateTaskDrawer({ open, onClose, onCreate }) {
         )}
 
         <Form.Item label="Main instructions" name="instructions">
-          <Input.TextArea rows={5} />
+          <Input.TextArea rows={5} className="rounded-sm!" />
         </Form.Item>
 
         <Button
           size="large"
           type="primary"
-          className="w-full h-10 bg-black! text-white! border-none! hover:bg-neutral-800!"
+          className="w-full h-10 bg-black! text-white! border-none! hover:bg-neutral-800! rounded-sm!"
           onClick={submit}
         >
           Create
